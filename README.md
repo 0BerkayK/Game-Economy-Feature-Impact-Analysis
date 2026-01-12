@@ -13,9 +13,9 @@ joker_games_case_study/
 │   └── ab_assignments.csv
 │
 ├── sql/
-│   ├── 01_event_validation.sql
-│   ├── 02_funnel_analysis.sql
-│   ├── 03_kpi_weekly.sql
+│   ├── 01_event_validation.sql ## veri kalitesi + event completeness + duplicate + timestamp tutarlılık
+│   ├── 02_funnel_analysis.sql ## install → session → level_start→ level_complete funnel, kırık noktalar
+│   ├── 03_kpi_weekly.sql ## purchase’ların session/event ile ilişki tutarsızlıkları
 │
 ├── notebooks/
 │   ├── 01_data_validation.ipynb

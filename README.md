@@ -1,33 +1,49 @@
 # Game-Economy-Feature-Impact-Analysis
-A data-driven approach to economy balancing and feature impact forecasting in a F2P mobile game
+A data-driven approach to economy balancing and feature impact forecasting in a F2P mobile game. This project is a full end-to-end game analytics & economy case study designed to mirror the responsibilities of a Data Analyst / Game Economist role at a free-to-play mobile game studio.
+
+
+The goal is to:
+
+-Validate data quality
+
+-Analyze player funnels and weekly KPIs
+
+-Evaluate an A/B test impacting progression and monetization
+
+-Run economy simulations (Monte Carlo + sensitivity analysis)
+
+-Make a clear ship / no-ship decision based on guardrails
+
+Final outcome:
+A flat reward increase improves progression but introduces unacceptable monetization and engagement trade-offs.
+Decision: DO NOT SHIP the change in its current form.
 
 ``` bash
 
 joker_games_case_study/
 │
 ├── data/
-│   ├── events.csv
 │   ├── users.csv
+│   ├── events.csv
 │   ├── purchases.csv
 │   ├── ads_events.csv
 │   └── ab_assignments.csv
 │
 ├── sql/
-│   ├── 01_event_validation.sql ## veri kalitesi + event completeness + duplicate + timestamp tutarlılık
-│   ├── 02_funnel_analysis.sql ## install → session → level_start→ level_complete funnel, kırık noktalar
-│   ├── 03_kpi_weekly.sql ## purchase’ların session/event ile ilişki tutarsızlıkları
+│   ├── 01_event_validation.sql
+│   ├── 02_funnel_analysis.sql
+│   ├── 03_kpi_weekly.sql
+│   └── 04_ab_test_evaluation.sql
+│   
 │
-├── notebooks/
-│   ├── 01_data_validation.ipynb
-│   ├── 02_kpi_analysis.ipynb
-│   ├── 03_ab_test_analysis.ipynb
-│   ├── 04_economy_simulation.ipynb
+├── scripts/
+│   ├── run_sql.py
+│   └── 05_economy_simulation.py
 │
-├── dashboards/
-│   └── weekly_game_health.pbix (or tableau/looker)
-│
-├── report/
-│   └── joker_games_case_study.pdf
+├── outputs/
+│   ├── economy_simulation_sensitivity.csv
+│   ├── economy_simulation_sensitivity_v2_sink.csv
+│   └── economy_simulation_sensitivity_v3_realistic_sink.csv
 │
 └── README.md
 
@@ -49,56 +65,194 @@ joker_games_case_study/
 | Ads          | Ads per DAU, Ads ARPDAU |
 
 
+📁 Data Files (/data)
+users.csv
+
+User-level metadata
+
+Used to define install cohorts and retention windows
+
+events.csv
+
+Core gameplay telemetry
+
+Key events:
+
+session_start, session_end
+
+level_start, level_complete
+
+Backbone for funnel, retention, and engagement analysis
+
+purchases.csv
+
+In-app purchase transactions
+
+Used for:
+
+ARPU
+
+IAP revenue
+
+Payer rate
+
+ads_events.csv
+
+Ad impression-level data
+
+Used for:
+
+Ads ARPU
+
+Ads vs engagement trade-off
+
+ab_assignments.csv
+
+Experiment assignment table
+
+Fields:
+
+user_id
+
+experiment_name
+
+variant
+
+assign_ts
 
 
+🧩 SQL Analysis (/sql)
+01_event_validation.sql
 
-Weekly Health Summary (Week of 2025-12-08)
+Purpose: Data quality & tracking validation
 
-Weekly active users increased to 331 (+14% WoW), while sessions per user stayed stable at ~3.64 and avg session duration held at 14.75 minutes, indicating engagement quality remained consistent.
-Total revenue peaked at $262.3, driven primarily by IAP ($243.6). Ads revenue also improved to $18.7 with rising impressions.
-Core economy health remained stable: level completion rate was 0.506, within our guardrail band (0.49–0.52).
-D1 retention averaged 0.47 and D7 was 0.16; no immediate retention regression observed.
-Next actions: validate IAP uplift drivers (SKU mix, offer exposure), keep economy guardrails, and monitor for monetization/retention trade-offs.
+Checks:
 
-Executive Summary
+Null or missing critical fields
 
-The +20% reward variant improved level completion by +5.1%, confirming a positive progression impact.
-However, it caused a significant monetization and engagement regression: ARPU -23.7%, Total Revenue -18.7%, and Sessions/User -14.2%, while D1 retention remained flat.
-Conclusion: Do not ship the change as-is.
-Next step is a targeted reward strategy (early levels / low-skill segments) combined with economy sinks, followed by a new experiment to preserve completion gains without sacrificing revenue.
+Timestamp ranges
+
+Broken or impossible event sequences
+
+Why this matters:
+
+Any downstream KPI or A/B result is meaningless without trusted telemetry.
+
+02_funnel_analysis.sql
+
+Purpose: Progression funnel diagnostics
+
+Analyzes:
+
+Install → first level start
+
+Level start → level complete
+
+Identifies anomalies such as:
+
+Level starts without completion
+
+Time ordering issues
+
+Output includes:
+
+Debug samples (DEBUG_LEVEL_START_NO_COMPLETE)
+
+Funnel drop-off ratios
+
+03_kpi_weekly.sql
+
+Purpose: Weekly game health monitoring
+
+KPIs:
+
+Weekly Active Users
+
+Sessions per user
+
+Avg session duration
+
+Level completion rate
+
+Ads & IAP revenue
+
+ARPWAU
+
+D1 / D7 retention
+
+Why weekly:
+
+Weekly aggregation smooths daily noise and aligns with product review cycles.
+
+04_ab_test_evaluation.sql
+
+Purpose: A/B test evaluation (reward +20%)
+
+Primary KPI:
+
+Level completion rate
+
+Secondary KPIs:
+
+Sessions per user
+
+ARPU (IAP + Ads)
+
+Ads impressions
+
+D1 retention (guardrail)
+
+Key result:
+
+Completion +5.06%
+
+ARPU -23.66%
+
+Sessions/user -14.18%
+
+📊 Outputs (/outputs)
+economy_simulation_sensitivity.csv
+
+Initial reward-only sensitivity
+
+economy_simulation_sensitivity_v2_sink.csv
+
+Reward + sink combinations (overpowered sink)
+
+economy_simulation_sensitivity_v3_realistic_sink.csv
+
+Realistic sink modeling
+
+Final, production-grade decision table
 
 
-Economy Simulation (Monte Carlo + Sensitivity)
+## Final Decision & Recommendation
+Decision
 
-## Goal
-Quantify progression vs monetization trade-offs for reward tuning, using Monte Carlo simulation and scenario sensitivity.
+❌ Do NOT ship reward-based progression tuning as-is.
 
-## Inputs
-Baseline weekly KPIs were calibrated from control group and weekly health metrics:
-- Completion rate baseline
-- Sessions/user baseline
-- ARPU split (IAP + Ads)
+Reason
 
-## Method
-For each scenario (global reward multiplier or targeted rollout), we simulate weekly user behavior:
-- Sessions ~ Poisson
-- Level starts per session ~ Poisson
-- Level completion ~ Binomial (p_complete depends on reward)
-- Ads revenue ~ impressions per session
-- IAP revenue ~ payer probability linked to “need” proxy + spend erosion
+Flat reward increases reduce friction too broadly
 
-We then compute scenario lifts vs baseline and flag ship candidates based on guardrails.
+Sessions drop → ads revenue drops
 
-## Output
-`outputs/economy_simulation_sensitivity.csv` includes:
-- completion, sessions/user, ARPU (IAP+Ads)
-- lifts vs baseline
-- a simple ship_candidate boolean
+Need collapses → IAP demand drops
 
+Sink balancing cannot fully recover losses
 
-I simulated weekly player behavior under different reward multipliers to quantify progression vs monetization trade-offs observed in the A/B test.
-A global +20% reward scenario reproduced the experiment outcome: completion increased by ~+5.1%, while sessions per user dropped ~-14% and total ARPU declined ~-18.7%.
-A targeted rollout (35% of users at +20%) improved completion modestly (+1.6%) but still decreased ARPU (-4.5%) and sessions (-4.7%), failing predefined guardrails.
-Conclusion: reward buffs must be paired with sink balancing and/or applied selectively (e.g., early levels, fail-recovery, low-skill segments) to preserve monetization.
+Recommendation
+
+Decouple rewards from economy
+
+Test situational, non-currency rewards
+
+Fail recovery
+
+Temporary power-ups
+
+Checkpoints
+
+Test economy levers (sinks/pricing) independently
 
 

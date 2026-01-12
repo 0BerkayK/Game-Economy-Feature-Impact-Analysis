@@ -35,7 +35,7 @@ joker_games_case_study/
 
 - Data Validation & Tracking Debug
 - Core KPI Framework(Product & Economy)
-- Weekly Performance & Anomaly Detection
+- Weekly Performance 
 - A/B Test Analysis
 - Economy Simulation
 - Ads Monetization Trade-off Analysis
@@ -52,6 +52,12 @@ joker_games_case_study/
 
 
 
+Weekly Health Summary (Week of 2025-12-08)
 
+Weekly active users increased to 331 (+14% WoW), while sessions per user stayed stable at ~3.64 and avg session duration held at 14.75 minutes, indicating engagement quality remained consistent.
+Total revenue peaked at $262.3, driven primarily by IAP ($243.6). Ads revenue also improved to $18.7 with rising impressions.
+Core economy health remained stable: level completion rate was 0.506, within our guardrail band (0.49–0.52).
+D1 retention averaged 0.47 and D7 was 0.16; no immediate retention regression observed.
+Next actions: validate IAP uplift drivers (SKU mix, offer exposure), keep economy guardrails, and monitor for monetization/retention trade-offs.
 
 

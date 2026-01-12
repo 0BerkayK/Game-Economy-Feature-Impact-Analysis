@@ -60,4 +60,10 @@ Core economy health remained stable: level completion rate was 0.506, within our
 D1 retention averaged 0.47 and D7 was 0.16; no immediate retention regression observed.
 Next actions: validate IAP uplift drivers (SKU mix, offer exposure), keep economy guardrails, and monitor for monetization/retention trade-offs.
 
+Executive Summary
+
+The +20% reward variant improved level completion by +5.1%, confirming a positive progression impact.
+However, it caused a significant monetization and engagement regression: ARPU -23.7%, Total Revenue -18.7%, and Sessions/User -14.2%, while D1 retention remained flat.
+Conclusion: Do not ship the change as-is.
+Next step is a targeted reward strategy (early levels / low-skill segments) combined with economy sinks, followed by a new experiment to preserve completion gains without sacrificing revenue.
 

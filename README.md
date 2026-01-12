@@ -70,8 +70,35 @@ Next step is a targeted reward strategy (early levels / low-skill segments) comb
 
 Economy Simulation (Monte Carlo + Sensitivity)
 
+## Goal
+Quantify progression vs monetization trade-offs for reward tuning, using Monte Carlo simulation and scenario sensitivity.
+
+## Inputs
+Baseline weekly KPIs were calibrated from control group and weekly health metrics:
+- Completion rate baseline
+- Sessions/user baseline
+- ARPU split (IAP + Ads)
+
+## Method
+For each scenario (global reward multiplier or targeted rollout), we simulate weekly user behavior:
+- Sessions ~ Poisson
+- Level starts per session ~ Poisson
+- Level completion ~ Binomial (p_complete depends on reward)
+- Ads revenue ~ impressions per session
+- IAP revenue ~ payer probability linked to “need” proxy + spend erosion
+
+We then compute scenario lifts vs baseline and flag ship candidates based on guardrails.
+
+## Output
+`outputs/economy_simulation_sensitivity.csv` includes:
+- completion, sessions/user, ARPU (IAP+Ads)
+- lifts vs baseline
+- a simple ship_candidate boolean
+
+
 I simulated weekly player behavior under different reward multipliers to quantify progression vs monetization trade-offs observed in the A/B test.
 A global +20% reward scenario reproduced the experiment outcome: completion increased by ~+5.1%, while sessions per user dropped ~-14% and total ARPU declined ~-18.7%.
 A targeted rollout (35% of users at +20%) improved completion modestly (+1.6%) but still decreased ARPU (-4.5%) and sessions (-4.7%), failing predefined guardrails.
 Conclusion: reward buffs must be paired with sink balancing and/or applied selectively (e.g., early levels, fail-recovery, low-skill segments) to preserve monetization.
+
 

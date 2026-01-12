@@ -38,7 +38,8 @@ joker_games_case_study/
 │
 ├── scripts/
 │   ├── run_sql.py
-│   └── 05_economy_simulation.py
+│   ├── generate_synthetic_data.py
+│   └── economy_simulation.py
 │
 ├── outputs/
 │   ├── economy_simulation_sensitivity.csv

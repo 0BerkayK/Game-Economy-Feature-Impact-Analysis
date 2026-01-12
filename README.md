@@ -67,3 +67,11 @@ However, it caused a significant monetization and engagement regression: ARPU -2
 Conclusion: Do not ship the change as-is.
 Next step is a targeted reward strategy (early levels / low-skill segments) combined with economy sinks, followed by a new experiment to preserve completion gains without sacrificing revenue.
 
+
+Economy Simulation (Monte Carlo + Sensitivity)
+
+I simulated weekly player behavior under different reward multipliers to quantify progression vs monetization trade-offs observed in the A/B test.
+A global +20% reward scenario reproduced the experiment outcome: completion increased by ~+5.1%, while sessions per user dropped ~-14% and total ARPU declined ~-18.7%.
+A targeted rollout (35% of users at +20%) improved completion modestly (+1.6%) but still decreased ARPU (-4.5%) and sessions (-4.7%), failing predefined guardrails.
+Conclusion: reward buffs must be paired with sink balancing and/or applied selectively (e.g., early levels, fail-recovery, low-skill segments) to preserve monetization.
+

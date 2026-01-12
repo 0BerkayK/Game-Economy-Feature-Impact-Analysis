@@ -35,6 +35,11 @@ joker_games_case_study/
 
 - Data Validation & Tracking Debug
 - Core KPI Framework(Product & Economy)
+- Weekly Performance & Anomaly Detection
+- A/B Test Analysis
+- Economy Simulation
+- Ads Monetization Trade-off Analysis
+- Final Recommendation
 
 | Field        | KPI                     |
 | ------------ | ----------------------- |
@@ -42,13 +47,6 @@ joker_games_case_study/
 | Monetization | ARPDAU, ARPPU           |
 | Economy      | Currency Earn vs Spend  |
 | Ads          | Ads per DAU, Ads ARPDAU |
-
-
-- Weekly Performance & Anomaly Detection
-- A/B Test Analysis
-- Economy Simulation
-- Ads Monetization Trade-off Analysis
-- Final Recommendation
 
 
 

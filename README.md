@@ -32,3 +32,28 @@ joker_games_case_study/
 └── README.md
 
 ```
+
+- Data Validation & Tracking Debug
+- Core KPI Framework(Product & Economy)
+
+| Field        | KPI                     |
+| ------------ | ----------------------- |
+| Engagement   | D1 / D7 Retention       |
+| Monetization | ARPDAU, ARPPU           |
+| Economy      | Currency Earn vs Spend  |
+| Ads          | Ads per DAU, Ads ARPDAU |
+
+
+- Weekly Performance & Anomaly Detection
+- A/B Test Analysis
+- Economy Simulation
+- Ads Monetization Trade-off Analysis
+- Final Recommendation
+
+
+
+
+
+
+
+

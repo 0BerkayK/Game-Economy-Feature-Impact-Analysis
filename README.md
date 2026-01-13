@@ -44,20 +44,20 @@ joker_games_study/
 │   │                           # WAU, sessions/user, completion rate, ARPU, retention
 │   │
 │   ├── 04_ab_test_evaluation.sql
-│   │                           # Reward-based A/B test analizi
-│   │                           # Primary KPI: completion rate
-│   │                           # Secondary KPIs: sessions, ARPU, ads & IAP
-│   │
-│   └── 05_simulation_inputs.sql
-│                               # Economy simulation için baseline metriklerin çıkarılması
-│                               # Gerçek veriden completion, sessions, ARPU kalibrasyonu
+│                              # Reward-based A/B test analizi
+│                              # Primary KPI: completion rate
+│                              # Secondary KPIs: sessions, ARPU, ads & IAP
+│   
+│   
+│                               
+│                               
 │
 ├── scripts/                  # Analizi çalıştıran ve economy simülasyonlarını yapan Python scriptleri
 │   ├── run_sql.py
 │   │                           # SQL dosyalarını DuckDB üzerinde çalıştıran yardımcı runner
 │   │                           # Çoklu statement desteği ve SELECT filtreleme
 │   │
-│   └── 05_economy_simulation.py
+│   └── economy_simulation.py
 │                               # Monte Carlo + sensitivity analysis ile game economy simülasyonu
 │                               # Reward, sink ve targeted rollout senaryoları
 │                               # Ship / no-ship karar mantığı

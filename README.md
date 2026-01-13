@@ -20,33 +20,60 @@ Decision: DO NOT SHIP the change in its current form.
 
 ``` bash
 
-/
+joker_games_study/
 │
-├── data/
-│   ├── users.csv
-│   ├── events.csv
-│   ├── purchases.csv
-│   ├── ads_events.csv
-│   └── ab_assignments.csv
+├── data/                     # Analiz ve simülasyonlarda kullanılan tüm ham ve türetilmiş veri setleri
+│   ├── users.csv             # Kullanıcı bazlı temel bilgiler (install zamanı, cohort tanımı vb.)
+│   ├── events.csv            # Oyun içi event logları (session, level start/complete vb.)
+│   ├── purchases.csv         # In-app purchase işlemleri (revenue, transaction zamanı)
+│   ├── ads_events.csv        # Reklam gösterimleri ve ads revenue event’leri
+│   └── ab_assignments.csv    # A/B test atamaları (experiment, variant, assign timestamp)
 │
-├── sql/
+├── sql/                      # DuckDB üzerinde çalışan tüm analitik ve validasyon SQL scriptleri
 │   ├── 01_event_validation.sql
+│   │                           # Event kalitesi ve tracking doğruluğu kontrolü
+│   │                           # Null alanlar, timestamp aralıkları, eksik event’ler
+│   │
 │   ├── 02_funnel_analysis.sql
+│   │                           # Oyuncu progression funnel analizi
+│   │                           # Install → level start → level complete geçişleri
+│   │                           # Funnel kırılma noktaları ve debug çıktıları
+│   │
 │   ├── 03_kpi_weekly.sql
-│   └── 04_ab_test_evaluation.sql
-│   
+│   │                           # Haftalık game health KPI’ları
+│   │                           # WAU, sessions/user, completion rate, ARPU, retention
+│   │
+│   ├── 04_ab_test_evaluation.sql
+│   │                           # Reward-based A/B test analizi
+│   │                           # Primary KPI: completion rate
+│   │                           # Secondary KPIs: sessions, ARPU, ads & IAP
+│   │
+│   └── 05_simulation_inputs.sql
+│                               # Economy simulation için baseline metriklerin çıkarılması
+│                               # Gerçek veriden completion, sessions, ARPU kalibrasyonu
 │
-├── scripts/
+├── scripts/                  # Analizi çalıştıran ve economy simülasyonlarını yapan Python scriptleri
 │   ├── run_sql.py
-│   ├── generate_synthetic_data.py
-│   └── economy_simulation.py
+│   │                           # SQL dosyalarını DuckDB üzerinde çalıştıran yardımcı runner
+│   │                           # Çoklu statement desteği ve SELECT filtreleme
+│   │
+│   └── 05_economy_simulation.py
+│                               # Monte Carlo + sensitivity analysis ile game economy simülasyonu
+│                               # Reward, sink ve targeted rollout senaryoları
+│                               # Ship / no-ship karar mantığı
 │
-├── outputs/
+├── outputs/                  # Analiz ve simülasyon çıktıları (CSV)
 │   ├── economy_simulation_sensitivity.csv
+│   │                           # Reward-only senaryo sonuçları
+│   │
 │   ├── economy_simulation_sensitivity_v2_sink.csv
+│   │                           # Reward + sink kombinasyonları (ilk iterasyon)
+│   │
 │   └── economy_simulation_sensitivity_v3_realistic_sink.csv
+│                               # Gerçekçi sink varsayımları ile final karar tablosu
 │
-└── README.md
+└── README.md                 # Projenin amacı, metodolojisi, bulguları ve karar özetini içeren ana doküman
+
 
 ```
 

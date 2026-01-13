@@ -20,7 +20,7 @@ Decision: DO NOT SHIP the change in its current form.
 
 ``` bash
 
-joker_games_case_study/
+/
 │
 ├── data/
 │   ├── users.csv
